@@ -8,14 +8,16 @@
 function config($key = '')
 {
     $config = [
-        'name' => 'Simple PHP Website',
+        'name' => 'Fuel Predictions',
         'site_url' => '',
         'pretty_uri' => false,
         'nav_menu' => [
             '' => 'Home',
-            'about-us' => 'About Us',
-            'products' => 'Products',
-            'contact' => 'Contact',
+            'fuelquote' => 'Get a Fuel Quote',
+            'fuelhistory' => 'Get your Fuel History',
+            'Login' => 'Login',
+            'Registration' => 'Join!',
+            'ClientProfileManagement' => 'Client',
         ],
         'template_path' => 'template',
         'content_path' => 'content',
