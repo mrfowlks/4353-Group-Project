@@ -1,5 +1,5 @@
 
-1- Install NodeJS(version 14)to your computer
+1- Install NodeJS
 
 2- in cmd
 
