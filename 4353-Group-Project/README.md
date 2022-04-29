@@ -1,10 +1,6 @@
 
 1- Install NodeJS
 
-2- in cmd
-
-`node -v` should print 14.16 sth.
-
 2- in folder do cmd
 
 `npm install`
