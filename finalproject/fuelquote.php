@@ -23,6 +23,8 @@ ob_start();
         <input class="form-control" type="number" name="sprice" id="sprice" placeholder="Suggested Price per Gallon" required readonly></input><br><br>
         <input class="form-control" type="number" name="totalPrice" id="totalPrice" placeholder="Total_Price" required readonly></input><br><br>
         <input class="form-control" type="submit" name="Submit" id="Submit" value="Submit"></input><br>
+                        <br><br>
+                <a href="profile.php">Profile</a>
         
 
    </form><br><br>
@@ -44,27 +46,28 @@ ob_start();
         
         //if gallons is greater than 1000 or less than 1000
         if($gallons >= 1000){
-            $margin = $margin + .2;
+            $margin = $margin + .02;
         }
         else {
-            $margin = $margin + .3;
+            $margin = $margin + .03;
         }
 
         //if in texas or not
         if($state == 'TX'){
-            $margin = $margin + .2;
+            $margin = $margin + .02;
         }
         else {
-            $margin = $margin + .4;
+            $margin = $margin + .04;
         }
 
         //if user already ordered before or not
         $select = mysqli_query($con, "SELECT * FROM fuel WHERE username = '".$_SESSION['username']."'");
         if(mysqli_num_rows($select)) {
-            $margin = $margin - .1;
+            $margin = $margin - .01;
         }
-        
-        $sprice = $current_price + $margin;
+        $margin = $margin + .1;
+        $sprice = $current_price * $margin;
+        $sprice = $current_price + $sprice;
         $totalPrice = $sprice * $gallons;
 
 
