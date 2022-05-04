@@ -100,7 +100,8 @@ ob_start();
                     <label>Zipcode:</label>
                     <div class="row">
       <input type="number" name="zipcode" required
-       minlength="5" maxlength="9" size="10">
+       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        type = "number" maxlength = "5" >
                   <div class="row">
                     <br>
                     <a href="login.php">
@@ -118,6 +119,7 @@ ob_start();
 
 <?php
     require('db.php');
+    
 if(isset($_REQUEST['Submit']))
 {
     $username = $_SESSION['username'];
@@ -128,21 +130,42 @@ if(isset($_REQUEST['Submit']))
     $state = $_REQUEST['state'];
     $zipcode = $_REQUEST['zipcode'];
 
-    $query = "INSERT INTO `profiles` (username, fname, address1, address2, city, state, zipcode) 
-    VALUES('$username', '$fname', '$address1', '$address2', '$city', '$state', '$zipcode')";
-
-    $query_run = mysqli_query($con,$query);
-
-    if($query_run)
-    {
-        $_SESSION['username'] = $username;
-        $_SESSION['state'] = $state;
+    $check_user = mysqli_query($con, "SELECT username FROM profiles where username = '$username' ");
+    if(mysqli_num_rows($check_user) > 0){
+        $query = "UPDATE profiles SET
+        fname = '$fname', address1 = '$address1', address2 = '$address2', city = '$city', state = '$state', zipcode = '$zipcode' 
+        WHERE username = '$username'";
         
-        echo  ' <script type="text/javascript"> alert("Data Saved") </script> ';
-    }
-    else
-    {
-        echo  ' <script type="text/javascript"> alert("Data not Saved") </script> ';
+        $query_run = mysqli_query($con,$query);
+        if($query_run)
+        {
+            $_SESSION['username'] = $username;
+            $_SESSION['state'] = $state;
+            
+            echo  ' <script type="text/javascript"> alert("Data Updated") </script> ';
+        }
+        else
+        {
+            echo  ' <script type="text/javascript"> alert("Data not Updated") </script> ';
+        }
+    
+    } else {
+        $query = "INSERT INTO `profiles` (username, fname, address1, address2, city, state, zipcode) 
+        VALUES('$username', '$fname', '$address1', '$address2', '$city', '$state', '$zipcode')";
+    
+        $query_run = mysqli_query($con,$query);
+        
+        if($query_run)
+        {
+            $_SESSION['username'] = $username;
+            $_SESSION['state'] = $state;
+            
+            echo  ' <script type="text/javascript"> alert("Data Saved") </script> ';
+        }
+        else
+        {
+            echo  ' <script type="text/javascript"> alert("Data not Saved") </script> ';
+        }
     }
 }
 ?>
